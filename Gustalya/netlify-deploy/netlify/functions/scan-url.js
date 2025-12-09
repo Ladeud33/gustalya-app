@@ -74,26 +74,26 @@ exports.handler = async (event) => {
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
-    const prompt = `Analyze this HTML content from a recipe webpage and extract the recipe information in JSON format:
+    const prompt = `Analyse ce contenu HTML d'une page de recette et extrais les informations en JSON. TOUT DOIT ÊTRE EN FRANÇAIS :
 {
-  "title": "Recipe title",
-  "description": "Brief description",
-  "category": "Category (Entrée, Plat, Dessert, Boisson, etc.)",
-  "prepTime": "Preparation time (e.g., 15 min)",
-  "cookTime": "Cooking time (e.g., 30 min)",
-  "servings": "Number of servings",
-  "difficulty": "Difficulty level (Facile, Moyen, Difficile)",
-  "ingredients": ["ingredient 1", "ingredient 2", ...],
+  "title": "Titre de la recette",
+  "description": "Brève description de la recette",
+  "category": "Catégorie (Entrée, Plat, Dessert, Boisson, Sauce, Soupe, Salade, etc.)",
+  "prepTime": "Temps de préparation (ex: 15 min)",
+  "cookTime": "Temps de cuisson (ex: 30 min)",
+  "servings": "Nombre de portions (ex: 4 personnes)",
+  "difficulty": "Niveau de difficulté (Facile, Moyen, Difficile)",
+  "ingredients": ["ingrédient 1 avec quantité", "ingrédient 2 avec quantité"],
   "steps": [
-    {"instruction": "Step 1 instruction", "duration": "optional duration"},
-    {"instruction": "Step 2 instruction"}
+    {"instruction": "Instruction étape 1 en français", "duration": "durée optionnelle"},
+    {"instruction": "Instruction étape 2 en français"}
   ]
 }
 
-HTML content:
+Contenu HTML :
 ${truncatedHtml}
 
-Return ONLY the JSON object, no additional text.`;
+Retourne UNIQUEMENT l'objet JSON, pas de texte supplémentaire.`;
 
     const result = await model.generateContent(prompt);
     const text = result.response.text();
