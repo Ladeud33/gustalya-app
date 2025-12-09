@@ -48,24 +48,24 @@ exports.handler = async (event) => {
 
     const base64Data = imageData.replace(/^data:image\/\w+;base64,/, '');
 
-    const prompt = `Analyze this image of a recipe and extract the following information in JSON format:
+    const prompt = `Analyse cette image de recette et extrais les informations suivantes en JSON. TOUT DOIT ÊTRE EN FRANÇAIS :
 {
-  "title": "Recipe title",
-  "description": "Brief description",
-  "category": "Category (Entrée, Plat, Dessert, Boisson, etc.)",
-  "prepTime": "Preparation time (e.g., 15 min)",
-  "cookTime": "Cooking time (e.g., 30 min)",
-  "servings": "Number of servings",
-  "difficulty": "Difficulty level (Facile, Moyen, Difficile)",
-  "ingredients": ["ingredient 1", "ingredient 2", ...],
+  "title": "Titre de la recette",
+  "description": "Brève description de la recette",
+  "category": "Catégorie (Entrée, Plat, Dessert, Boisson, Sauce, Soupe, Salade, etc.)",
+  "prepTime": "Temps de préparation (ex: 15 min)",
+  "cookTime": "Temps de cuisson (ex: 30 min)",
+  "servings": "Nombre de portions (ex: 4 personnes)",
+  "difficulty": "Niveau de difficulté (Facile, Moyen, Difficile)",
+  "ingredients": ["ingrédient 1 avec quantité", "ingrédient 2 avec quantité"],
   "steps": [
-    {"instruction": "Step 1 instruction", "duration": "optional duration"},
-    {"instruction": "Step 2 instruction"}
+    {"instruction": "Instruction étape 1 en français", "duration": "durée optionnelle"},
+    {"instruction": "Instruction étape 2 en français"}
   ]
 }
 
-If you cannot identify some fields, make reasonable guesses based on the recipe type.
-Return ONLY the JSON object, no additional text.`;
+Si tu ne peux pas identifier certains champs, fais des suppositions raisonnables basées sur le type de recette.
+Retourne UNIQUEMENT l'objet JSON, pas de texte supplémentaire.`;
 
     const result = await model.generateContent([
       { text: prompt },
